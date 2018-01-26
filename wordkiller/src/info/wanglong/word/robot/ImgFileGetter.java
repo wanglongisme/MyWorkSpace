@@ -2,32 +2,45 @@ package info.wanglong.word.robot;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 
 import info.wanglong.word.bean.Sound;
+import info.wanglong.word.bean.Time;
 import info.wanglong.word.bean.Word;
 import info.wanglong.word.core.ServiceBus;
 
 public class ImgFileGetter extends ServiceBus{
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
+		long startTime = System.currentTimeMillis(); //开始时间
 		ImgFileGetter getter = new ImgFileGetter();
 		//查库
 		GetWordInfo me = new GetWordInfo();
 		//获取单词集合
-		List<Word> list = me.getWordList(1359, 4);
+		List<Word> list = me.getWordList(1416, 50);
 		getter.downLoadList(list);
+		long endTime = System.currentTimeMillis(); //结束时间
+		long doTime = (endTime - startTime)/1000; //秒
+		if(doTime%60 >0) {
+			double mins = doTime / 60;
+			double min = Math.floor(mins);
+			System.out.println("执行结束. 用时: " + min+"分" + (doTime%60) + " s");
+			return;
+		}
+		System.out.println("执行结束. 用时: " + doTime + " s");
+		
 	}
 	
 	
@@ -37,7 +50,6 @@ public class ImgFileGetter extends ServiceBus{
 			return null;
 		}
 		String insertSql = "insert into image(wordId, word, fileName, url, size, star) values(?,?,?,?,?,?)";
-		
 		for(Word word : list) {
 			String w = word.getEn();
 			System.out.println(w);
@@ -45,7 +57,14 @@ public class ImgFileGetter extends ServiceBus{
 			int star = word.getStar();
 			List<String> imgList = JsoupBaidu.getPictures(w, 0, "");
 			for(int i=0; i<imgList.size(); i++) {
-				CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+				RequestConfig defaultRequestConfig = RequestConfig.custom()
+						  .setSocketTimeout(10000)
+						  .setConnectTimeout(10000)
+						  .setConnectionRequestTimeout(10000)
+						  .setStaleConnectionCheckEnabled(true)
+						  .build();
+				CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(defaultRequestConfig).build();
+				//CloseableHttpClient httpclient = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
 				String url = imgList.get(i);
 				HttpGet httpGet = new HttpGet(url);
 				CloseableHttpResponse response = null;
@@ -91,10 +110,19 @@ public class ImgFileGetter extends ServiceBus{
 						if(input != null) {
 							input.close();	
 						}
-						System.out.println(fileName + " is download.");
+						System.out.println(fileName + " is download - "+ Time.now());
 						//入库
-						this.jdbcTemplate.update(insertSql, new Object[] {id, w, fileName, url, size+"", star});
-						System.out.println("insert done.");
+						try {
+							this.jdbcTemplate.update(insertSql, new Object[] {id, w, fileName, url, size+"", star});	
+						}catch(Exception e) {
+							System.out.println("update exception.");
+							response.close();
+							httpGet.releaseConnection();
+							httpClient.close();
+							continue;
+						}
+						
+						//System.out.println("insert done...");
 					}
 				}
 				response.close();
