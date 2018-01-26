@@ -8,6 +8,14 @@ public class Word {
 	String voiceLabel;
 	int star;
 	int indexCode;
+	String uk_sound;
+	String en_sound;
+	public String getEn_sound() {
+		return en_sound;
+	}
+	public void setEn_sound(String en_sound) {
+		this.en_sound = en_sound;
+	}
 	public int getId() {
 		return id;
 	}
@@ -50,11 +58,20 @@ public class Word {
 	public void setIndexCode(int indexCode) {
 		this.indexCode = indexCode;
 	}
-	
+	public String getUk_sound() {
+		return uk_sound;
+	}
+	public void setUk_sound(String uk_sound) {
+		this.uk_sound = uk_sound;
+	}
 	@Override
 	public String toString() {
 		return "Word [id=" + id + ", en=" + en + ", cn=" + cn + ", type=" + type + ", voiceLabel=" + voiceLabel
-				+ ", star=" + star + ", indexCode=" + indexCode + "]";
+				+ ", star=" + star + ", indexCode=" + indexCode + ", uk_sound=" + uk_sound + ", en_sound=" + en_sound
+				+ "]";
 	}
+	
+
+
 	
 }

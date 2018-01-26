@@ -12,7 +12,7 @@ public class MysqlConfig implements IMyDBConfig {
 	}
 
 	public String getUrl() {
-		return "jdbc:mysql://localhost:3306/word?useUnicode=true&amp;characterEncoding=utf-8";
+		return "jdbc:mysql://localhost:3306/word?useUnicode=true&amp;characterEncoding=utf-8&rewriteBatchedStatements=true";
 	}
 
 	public String getUserName() {
