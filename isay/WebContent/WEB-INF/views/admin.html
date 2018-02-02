@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>admin</title>
+	<!-- <link rel="stylesheet" href="../css/admin/css/font-awesome.min.css"> -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../css/admin/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="../css/admin/css/default.css">
+	<link rel="stylesheet" href="../css/admin/css/style.css">
+	<link rel="stylesheet" href="../js/layui/css/layui.css">
+	<!--[if IE]>
+		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="htmleaf-container">
+		<!-- <header class="htmleaf-header">
+			<h1>isay manager <span>A Pure CSS3 Backend Panel</span></h1>
+			<div class="htmleaf-links">
+				<a class="htmleaf-icon icon-htmleaf-home-outline" href="http://www.htmleaf.com/" title="jQuery之家" target="_blank"><span> jQuery之家</span></a>
+				<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="http://www.htmleaf.com/css3/ui-design/201508092383.html" title="返回下载页" target="_blank"><span> 返回下载页</span></a>
+			</div>
+		</header> -->
+		<div class="container pb30" style="margin-top: 30px;">
+			<div class="clear-backend">
+			<div class="avatar">
+				<div>
+					<a href="http://www.wanglong.info" target="_blank">
+						<img src="../img/admin.jpg" alt="">
+					</a>
+				</div>
+			</div>
+
+			<!-- tab-menu -->
+			<input type="radio" class="tab-1" name="tab" checked="checked">
+			<span>Home</span><i class="glyphicon glyphicon-home" style="top:auto;"></i>
+
+			<input type="radio" class="tab-2" name="tab">
+			<span >List</span><i class="glyphicon glyphicon-list-alt" style="top:auto;"></i>
+			
+			<!--  -->
+			<input type="radio" class="tab-3" name="tab">
+			<span>Users</span><i class="fa fa-user"></i>
+
+			<input type="radio" class="tab-4" name="tab">
+			<span>Comments</span><i class="fa fa-comment"></i>
+			
+			<input type="radio" class="tab-5" name="tab">
+			<span>Upload</span><i class="fa fa-cloud-upload"></i>
+			
+			<input type="radio" class="tab-6" name="tab">
+			<span>Favorite</span><i class="fa fa-star"></i>
+			
+			<input type="radio" class="tab-7" name="tab">
+			<span>Photos</span><i class="fa fa-photo"></i>
+			
+			<input type="radio" class="tab-8" name="tab">
+			<span>Analysis</span><i class="fa fa-line-chart"></i>
+			
+			<input type="radio" class="tab-9" name="tab">
+			<span>Links</span><i class="fa fa-link"></i>
+			
+			<input type="radio" class="tab-10" name="tab">
+			<span>Settings</span><i class="fa fa-cog"></i>
+
+			<!-- tab-top-bar button -->
+			<div class="top-bar" >
+				<ul id="ul_shower">
+					<li id="li_out" style="display:none;">
+						<a href="" title="Out">
+							<i class="glyphicon glyphicon-share"></i>
+						</a>
+					</li>
+					<li id="li_messages" style="display:none;">
+						<a href="" title="Messages">
+							<i class="glyphicon glyphicon-envelope"></i>
+						</a>
+					</li>
+					<li id="li_delete" style="display:none;">
+						<a href="javascript:void(0)" title="删除日志" onclick="delDiary()">
+							<i class="glyphicon glyphicon-trash"></i>
+						</a>
+					</li>
+					<li id="li_see" style="display:none;">
+						<a href="javascript:void(0)" title="查看日志" onclick="seeDiary()">
+							<i class="glyphicon glyphicon-eye-open"></i>
+						</a>
+					</li>
+					<li id="li_edit2" style="display:none;">
+						<a href="javascript:void(0)" title="文本模式" onclick="edit2()">
+							<i class="glyphicon glyphicon-pencil"></i>
+						</a>
+					</li>
+					<li id="li_edit" style="display:none;">
+						<a href="javascript:void(0)" title="编辑器" onclick="edit()">
+							<i class="glyphicon glyphicon-leaf"></i>
+						</a>
+					</li>
+					<li id="li_write" style="display:none;">
+						<a href="javascript:void(0)" title="Write" onclick="createDiary()">
+							<i class="glyphicon glyphicon-edit"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- tab-content -->
+			<div class="tab-content">
+				<section class="tab-item-1">
+					<h1>One</h1>
+				</section>
+				<section class="tab-item-2">
+					<div id="diary_list">
+						<!-- <a href="#" class="list-group-item active"> -->
+					</div>
+					<div id="page_div" style="position:absolute; bottom:235px;left:220px;"></div>
+				</section>
+				<section class="tab-item-3">
+					<h1>Three</h1>
+				</section>
+				<section class="tab-item-4">
+					<h1>Four</h1>
+				</section>
+				<section class="tab-item-5">
+					<h1>Five</h1>
+				</section>
+				<section class="tab-item-6">
+					<h1>Six</h1>
+				</section>
+				<section class="tab-item-7">
+					<h1>Sever</h1>
+				</section>
+				<section class="tab-item-8">
+					<h1>Eight</h1>
+				</section>
+				<section class="tab-item-9">
+					<h1>Nine</h1>
+				</section>
+				<section class="tab-item-10">
+					<h1>Ten</h1>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../js/layer/layer.js" ></script>
+<script type="text/javascript" src="../js/layui/layui.js" ></script>
+<script type="text/javascript" src="../js/admin.js" ></script>
+<script type="text/javascript" src="../js/diary.js" ></script>
+</html>

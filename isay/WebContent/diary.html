@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Diary</title>
+<link rel="stylesheet" href="js/layui/css/layui.css">
+<style type="text/css">
+body{
+font-family: 'lucida grande', 'lucida sans unicode', lucida, helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif
+}
+</style>
+</head>
+<body>
+<div style="margin: 2% 5% 2% 5%">
+	<table style="font-size: medium;width: 75%;">
+    <tbody>
+    	<tr>
+        <td width="60%">
+	        <div id="info" style="padding: 2% 8% 5% 8%; border: 1px solid LightGrey;">
+				<h2 id="title" style="border-bottom: 2px LightGrey solid;font-size:1.5em;font-weight: bold;color: #666666;"></h2>
+				<small id="time" class="text-right"></small>
+			</div>
+        </td>
+        </tr>
+     </tbody>
+     </table>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="js/layui/layui.js" ></script>
+</html>
+<script>
+$(function(){
+	var url = window.location.href; //获取url中"?"符后的字串 
+	var id = url.split("?")[1];			
+	$.ajax({
+		async : true,
+		type : "post",
+		url:"getDiary/"+id,
+		data:{},
+		dataType : "json",
+		success : function(data){
+			$("#title").text(data.title);
+			$("#title").after(data.info);
+			$("#time").append(data.createTime);
+			//格式化源码样式
+			layui.use('code', function(){ //加载code模块
+				layui.code({
+					elem: 'pre',
+					encode: true,
+					about: false
+				}); //引用code方法
+			});
+		}, error : function(){
+			console.log("getDiary - error");
+		}
+	});
+});
+</script>

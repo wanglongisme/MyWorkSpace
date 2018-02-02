@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优化搜索</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/so_html_css/build.css">
+<link rel="stylesheet" href="js/layui/css/layui.css">
+<link rel="stylesheet" href="css/so_html_css/jquery-labelauty.css">
+<style type="text/css" media="screen">
+      body {
+        background-color: #f1f1f1;
+        margin: 0;
+        font-family: "Segoe UI","Microsoft YaHei";font-size: medium;
+      }
+      .container { margin: 30px auto 40px auto; width: 800px; text-align: center; }
+      #search input[type=text] {
+        font-size: 18px;
+        width: 665px;
+        height: 33px;
+      }
+	<!-- 文件窗口使用的css -->
+	#fileDiv ul { list-style-type: none;}
+	#fileDiv li { display: inline-block;}
+	#fileDiv li { margin: 10px 0;}
+	input.labelauty + label { font: 12px "Microsoft Yahei";}
+    </style>
+</head>
+<body>
+<div class="container">
+	<div class="container">
+		<div class="radio radio-danger radio-inline">
+	        <input type="radio" name="radio1" id="baidu" value="baidu" checked>
+	        <label for="baidu">百度</label>
+	    </div>
+	    <div class="radio radio-danger radio-inline">
+	        <input type="radio" name="radio1" id="google" value="google" >
+	        <label for="google" id="google" data-toggle="tooltip" data-placement="right" title="请确保你可以访问google.">Google</label>
+	    </div>
+    </div>
+   	<div class="container">
+		<div class="radio radio-danger radio-inline">
+	        <input type="radio" name="radio2" id="intitle" value="intitle" checked>
+	        <label for="intitle" title="标题中含有该关键词的网页">标题</label>
+	    </div>
+	    <div class="radio radio-danger radio-inline">
+	        <input type="radio" name="radio2" id="site" value="site" >
+	        <label for="site" title="只在该站点搜索">站点</label>
+	    </div>
+	    <div class="radio radio-danger radio-inline">
+	        <input type="radio" name="radio2" id="inurl" value="inurl" >
+	        <label for="inurl" title="网页的url中必须包含该关键词\n如百度中输入'语文 inurl:edu',则搜出网页中含有'语文'而且该网页的url中包含edu的">URL</label>
+	    </div>
+	    <div class="radio radio-danger radio-inline">
+	        <input type="radio" name="radio2" id="justyou" value="justyou" >
+	        <label for="justyou" title="用双引号包住关键词,搜索引擎不拆分处理">精确匹配</label>
+	    </div>
+	    <div class="radio radio-danger radio-inline">
+	        <input type="radio" name="radio2" id="filetype" value="filetype" >
+	        <label for="filetype" title="搜索文件,相当于filetype:doc">文件</label>
+	    </div>
+    </div>
+    
+  <div id="search" >
+    <!-- <label for="search">Find code, projects, and people on ChinaZ（<a href="http://sc.chinaz.com" target="_blank">sc.chinaz.com</a>）:</label> -->
+    <input type="text" name="q" id="q" style="padding-left: 0px;" class="radio-inline">
+    <input id="submitButton" class="btn" type="submit" value="Search" >
+  </div>
+  <div class="radio-inline"><small id="search2" style="color:#CC3300"></small></div>
+</div>
+<div style="text-align:center;margin:100px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p> 2017.02.22 15:53 </p>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="js/layer/layer.js" ></script>
+<script type="text/javascript" src="js/layui/layui.js" ></script>
+<script type="text/javascript" src="js/jquery-labelauty.js" ></script>
+</html>
+<script type="text/javascript">
+var searchUrl = "http://www.baidu.com/s?cl=3&wd=";
+$(function(){
+	addClickSearchEvent();
+	addRadioEvent();
+});
+
+var addClickSearchEvent = function(){
+	$("#submitButton").click(function(){
+		var word = $("#q").val();
+		var x = $("#search2").text();
+		var radioVal = $("input[name='radio2']:checked").val();
+		if(radioVal=="intitle"){
+			word = "intitle:"+word;
+		}else if(radioVal=="justyou"){
+			word = "\""+word+"\"";
+		}
+		var u = searchUrl + word + x;
+		//alert(u);
+		window.open(u);
+		//http://www.baidu.com/s?cl=3&wd=bc filetype:pdf
+		//https://www.google.com.hk/?gws_rd=ssl#safe=strict&q=cc filetype:doc
+	});
+}
+
+var addRadioEvent = function(){
+	//baidu or google
+	$("input[name='radio1']").click(function(){
+		var b = $(this).attr("value");
+		if(b == "baidu"){
+			searchUrl = "http://www.baidu.com/s?cl=3&wd=";
+		}else{
+			searchUrl = "https://www.google.com.hk/?gws_rd=ssl#safe=strict&q=";
+		}
+	});
+	
+	//intitle, inurl, site, filetype...
+	$("input[name='radio2']").click(function(){
+		$("#search2").text("");
+		var b = $(this).attr("value");
+		if(b == "intitle"){
+			//
+		}else if(b == "site"){
+			layerPromptInput("输入站点","site");
+		}else if(b == "inurl"){
+			layerPromptInput("输入URL匹配","inurl");
+		}else if(b == "justyou"){
+			//
+		}else if(b == "filetype"){
+			layerCheckbox();
+		}else{
+			
+		}
+	});
+}
+
+//输入弹窗
+var layerPromptInput = function(info,ex){
+	layer.prompt({
+		formType: 2,
+		value: '',
+		title: info,
+		anim:4,
+		area: ['400px'], //自定义文本域宽高
+	 	cancel: function(index){ 
+	 		//关闭
+	 		$("#intitle").prop("checked", true);
+	 		layer.close(index);
+		},btn2: function(){
+			//取消回调
+			$("#intitle").prop("checked", true);
+		}
+	},function(value, index, elem){
+		  $("#search2").text("+"+ex+":"+value);
+		  layer.close(index);
+	});
+}
+
+//选择文件时弹窗
+var layerCheckbox = function(){
+	
+	var _div = '<div id="fileDiv" style="width:400px;height:240px">'
+		+'<ul class="dowebok">'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="all" value="all"></li><br>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="doc" value="doc"></li>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="pdf" value="pdf"></li>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="ppt" value="ppt"></li>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="txt" value="txt"></li><br>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="mp4" value="mp4"></li>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="avi" value="avi"></li>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="wmv" value="wmv"></li>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="rmvb" value="rmvb"></li>'
+		+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" data-labelauty="mkv" value="mkv"></li>'
+		
+		//disabled不可用//+'<li style="display: inline-block;margin: 10px 0 5px 5px;"><input type="checkbox" name="checkbox" disabled data-labelauty=".NET"></li>'
+		+'</ul>'
+		+'</div><div style="position:relative;left:100px;width:220px"><button class="btn btn-large" style="width:200px;" onclick="serachFile()">确定</button></div>';
+	selectFileIndex = layer.open({
+		  type: 1,
+		  skin: '', //加上边框
+		  title: "选择文件",
+		  area: ['400px', '400px'], //宽高
+		  anim: 4,
+		  cancel: function(index){ 
+		 		//关闭
+		 		$("#intitle").prop("checked", true);
+		 		//layer.close(selectFileIndex);
+		  },
+		  content: _div
+	});
+	$(":input[name='checkbox']").labelauty();
+	
+}
+
+var serachFile = function(){
+	var fileVal = "";
+	$("input[type='checkbox']:checked").each(function(){
+		fileVal = fileVal + $(this).attr("value") + " ";
+	});
+	$("#search2").text("+filetype:"+fileVal);
+	layer.close(selectFileIndex);
+	
+}
+</script>

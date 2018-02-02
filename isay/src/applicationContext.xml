@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	default-lazy-init="false"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+<context:component-scan base-package="com.isay"></context:component-scan>
+	<!-- scope属性配置bean的作用域
+		缺省值是singleton:单例
+		prototype:每次都创建一个bean
+		
+	 -->
+	
+	<!-- 管理bean的生命周期 -->
+	<bean class="com.isay.web.MyProcessor" ></bean>
+	
+<context:property-placeholder location="classpath:mysql.properties"/>
+<!-- 将c3p0交给spring -->
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<property name="user" value="${jdbc.userName}"></property>
+	<property name="password" value="${jdbc.password}"></property>
+	<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+	<property name="driverClass" value="${jdbc.driverClass}"></property>
+	<property name="maxIdleTime" value="${jdbc.maxIdleTime}"></property>
+</bean>
+
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<constructor-arg ref="dataSource"></constructor-arg>
+</bean>
+<!-- 
+<bean id="sessionFactory"
+	class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+	p:dataSource-ref="dataSource"
+	p:mappingLocations="classpath:/com/isay/model/**/*.hbm.xml">
+	<property name="hibernateProperties">
+	    <props>
+	        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+	        <prop key="hibernate.show_sql">true</prop>
+	    </props>
+	</property>		
+</bean>
+
+<bean id="hibernateTemplate"
+	class="org.springframework.orm.hibernate3.HibernateTemplate"
+	p:sessionFactory-ref="sessionFactory"/>
+ -->
+<bean id="transactionManager" 
+	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"></property>
+</bean>
+<!-- 
+<bean id="transactionManager"
+	class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+	p:sessionFactory-ref="sessionFactory" />
+-->
+<!-- 配置注解管理事务 
+<tx:annotation-driven transaction-manager="transactionManager" />
+-->
+<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+<task:annotation-driven />
+
+</beans>

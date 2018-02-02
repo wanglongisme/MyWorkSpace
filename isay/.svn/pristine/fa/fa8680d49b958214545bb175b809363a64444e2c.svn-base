@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<title>Writing</title>
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<br>
+	<input type="text" class="form-control" id="title" name="title">
+	<br>
+	<textarea  rows="15" id="info" name="info" ></textarea>
+	<div class="tinymce"></div>
+	<br>
+	<button type="button" class="btn btn-success" onclick="submit()">Submit</button>
+	<button type="button" class="btn btn-link" onclick="gotoList()">Cancel</button>
+</div>
+<form id="my_form" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
+	<input id="file_input" name="file" type="file" onchange="uploadImg();">
+</form>
+</body>
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../js/tinymce/tinymce.min.js" ></script>
+<script type="text/javascript" src="../js/tinymce/plugins/imagetools/plugin.min.js" ></script>
+</html>
+<script>
+var inputId;
+$(function(){
+  	tinymce.init({
+		selector:'textarea',
+		//plugins: ["image", "code"],
+		//invalid_elements:'strong,em,',
+		menubar: false,
+		plugins: [
+		  'advlist autolink lists link image charmap print preview anchor',
+		  'searchreplace visualblocks code fullscreen',
+		  'insertdatetime table contextmenu paste media code '
+		],
+		toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media code',
+		//toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | code',
+		file_browser_callback: function(field_name, url, type, win) {
+			//field_name为组件id
+			if(type=='image'){
+				inputId = "#"+field_name;
+				$('#my_form input').click();
+			}
+		}
+	});
+ 	
+
+});
+
+function submit(){
+	var info = tinyMCE.get('info').getContent();
+	var title = $("#title").val();
+	$.ajax({
+		async : true,
+		type : "post",
+		url:"../write",
+		data:{'info':info,'title':title},
+		dataType : "text",
+		success : function(data){
+			window.location.href="../list.html"; 
+		}, error : function(){
+			console.log("write - error");
+		}
+	});
+}
+
+function gotoList(){
+	location.href="list.html";
+}
+
+function uploadImg(){
+	var formData = new FormData();
+	formData.append("file",$("#file_input")[0].files[0]);
+	$.ajax({
+	     url : "../upload/img",
+	     type : "POST",
+	     data : formData,
+	     dataType : "text",
+	  	 //告诉jQuery不要去处理发送的数据
+	     processData:false,
+	     //阻止jquery修改contentType报表头,导致传输文件的边界无法识别的错误.
+	     contentType : false,
+	     success : function(imgUrl) {
+	     	console.log(imgUrl);
+	     	$(inputId).val("../"+imgUrl);
+	     },error : function(data) {
+	     	console.log("upload - img - error: "+JSON.stringify(data));
+	     } 
+	});
+}
+</script>

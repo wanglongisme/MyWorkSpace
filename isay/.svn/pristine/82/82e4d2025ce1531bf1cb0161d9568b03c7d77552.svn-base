@@ -1,0 +1,58 @@
+package com.isay.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.isay.dao.DiaryDao;
+import com.isay.model.Diary;
+
+@Service("toDiaryService")
+public class ToDiaryServiceImpl implements DiaryService{
+
+	@Autowired
+	private DiaryDao dd;
+	@Override
+	public boolean writeDiary(Diary d) {
+		return dd.insertDiary(d);
+	}
+
+	@Override
+	public Diary getDiary(int id) {
+		
+		return dd.getDiary(id);
+	}
+
+	@Override
+	public List getDiaryList(int page) {
+		return dd.getDiaryList(page);
+	}
+
+	@Override
+	public List getBlogList(int page) {
+		return dd.getBlogList(page);
+	}
+	
+	@Override
+	public boolean updateDiary(Diary diary) {
+		return dd.updateDiary(diary);
+	}
+
+	@Override
+	public String getPage(String pageType) {
+		return dd.getPage(pageType);
+	}
+
+	@Override
+	public boolean delDiary(int id) {
+		return dd.delDiary(id);
+	}
+
+	@Override
+	public List getBlogAndDiaryList(int page) {
+		// TODO Auto-generated method stub
+		return dd.getBlogAndDiaryList(page);
+	}
+	
+}

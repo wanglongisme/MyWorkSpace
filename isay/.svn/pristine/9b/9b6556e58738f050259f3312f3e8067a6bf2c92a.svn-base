@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Logn</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--width=device-width确保正确呈现在不同设备上
+		initial-scale=1.0 以1:1呈现,没有缩放
+		user-scalable=no 禁止缩放
+		maximum-scale=1.0 配合user-scalable=no使用, 用户只能滚动屏幕.
+	  -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0 ">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="js/layui/css/layui.css">
+	<style type="text/css">
+	body{font-family: "Microsoft YaHei","Segoe UI";font-size: medium;}
+	#list_ul li:hover {
+    	display: block;
+    	background: #ddd;
+	}
+	#diaryDiv div{
+		border: 1px solid #ddd;
+		width: 70%;
+		margin-top:10px;
+		border-radius:2px;
+		margin-bottom: 10px;
+	}
+	#diaryDiv div p{
+		line-height:26px;
+	}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" style="opacity: .9" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="font-family: 'Microsoft YaHei'"><!-- 王龙的网络博客 -->WangLong is me<!-- <small>for day</small> --></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#" >Blog</a></li>
+                <li><a href="#" >Diary</a></li>
+                <li><a href="#" >搜索</a></li>
+                <li><a href="#" >数据</a></li>
+                <li><a href="about.html" target="_blank">It's me</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="margin: 5% 10% 2% 10%" id="blogDiv">
+    <table style="width: 70%" >
+        <tbody>
+	        <tr>
+	            <td width="70%"><ul class="list-group" id="list_ul">
+	            	<!-- blog -->
+	            </ul></td>
+	        </tr>
+    	</tbody>
+    </table>
+    <div id="page_div" style="position:absolute; bottom:10px;left:270px;"></div>
+</div>
+<div style="margin: 5% 10% 2% 10%;display:none;" id="diaryDiv">
+	<!-- diary -->
+</div>
+<!-- Tencent data conut -->
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=61737427" charset="UTF-8"></script>
+</body>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="js/layui/layui.js" ></script>
+<script type="text/javascript" src="js/diary.js" ></script>
+</html>
+<script>
+$(function(){
+	initBlog(); 
+	clickMenuButtonEvent();  //导航点击事件
+	addTouchBottomEvent();  //Diary里触摸底部,加载数据
+});
+
+//导航 Blog
+var initBlog = function(){
+	//分页组件
+	layui.use(['laypage', 'layer'], function(){
+		  var laypage = layui.laypage,layer = layui.layer;
+		  var zPage = getPage(1);
+		  laypage({
+			    cont: $('#page_div'),
+			    pages: zPage,
+			    first: 1,
+			    last: zPage,
+			    skin: '#0099CC',
+			    groups: 8,
+			    //prev: '<em><</em>',
+			    //next: '<em>></em>',
+			    prev: false,
+			    next: false,
+		    	jump: function(obj, first){
+		    		//if(!first){
+		    			//layer.msg('第 '+ obj.curr +' 页');
+		    			getBlogList(obj.curr);
+		    		//}
+		    	}
+		});
+	}); 
+}
+
+function getBlogList(page){
+	$.ajax({
+		async : false,
+		type : "post",
+		url:"getBlogList",
+		data:{'page':page},
+		dataType : "json",
+		success : function(data){
+			//console.log(data);
+			if(data!=null && data.length>0){
+				$("#list_ul").empty();
+				var li = "";
+				for(i=0; i<data.length; i++){
+					var _li = "<li class='list-group-item' ><a style='color:#0099CC' href='diary.html?"+data[i].id+"'>"+data[i].title+"</a></li>";
+					li = li + _li;
+				}
+				$("#list_ul").append(li);
+			}
+		}, error : function(){
+			
+		}
+	});
+}
+//导航 Diary
+var initDiary = function(page){
+	$.ajax({
+		async : false,
+		type : "post",
+		url:"getDiaryList",
+		data:{'page':page},
+		dataType : "json",
+		success : function(data){
+			//console.log(data);
+			if(page==1){
+				$("#diaryDiv").empty();
+			}
+			if(data!=null && data.length>0){
+				var p = "";
+				for(i=0; i<data.length; i++){
+					var _p = "<div id='"+data[i].id+"' class='well'>"+data[i].info+"<br><span >"+data[i].createTime+"</span></div>";
+					p = p + _p;
+				}
+				$("#diaryDiv").append(p);
+			}else{
+				layer.msg('没有更多了');
+				$(window).unbind('scroll');
+			}
+		}, error : function(){
+			
+		}
+	});
+}
+
+//导航点击事件
+var clickMenuButtonEvent = function(){
+	$("#bs-example-navbar-collapse-1 >ul >li").click(function(){
+		$(this).siblings().removeClass("active");
+		$(this).addClass("active");
+		var li_index = $("#bs-example-navbar-collapse-1 >ul >li").index(this);
+		switch(li_index){
+			case 0:  //Blog
+			    $("#diaryDiv").hide();
+				$("#blogDiv").show();
+				initBlog();
+			    break;
+			case 1:  //Diary
+				$("#blogDiv").hide();
+				$("#diaryDiv").show();
+				initDiary(1);
+			    break;
+			case 2:
+				//window.location.href = "so.html";
+				window.open("so.html", "_blank");
+			  break;
+			case 3:
+				//window.location.href = "so.html";
+				window.open("data_model/data.html", "_blank");
+			  break;
+			default:
+		  	  //to do
+		}
+		
+	});
+}
+
+var diaryPage = 1;
+var addTouchBottomEvent = function(){
+	
+	$(window).scroll(function(){
+		
+		var clientHeight = parseInt($(window).height()); 
+		var scrollTop = $(window).scrollTop();
+		var htmlHeight = parseInt($(document).height());
+		//alert(htmlHeight+"-"+clientHeight+"-"+scrollTop+"  "+isNaN(htmlHeight));
+		var a = parseInt(htmlHeight)-parseInt(clientHeight)-parseInt(scrollTop);
+		//alert(a);
+        if(a<150){
+        	diaryPage = diaryPage + 1;
+        	initDiary(diaryPage);
+        }
+    });
+}
+</script>

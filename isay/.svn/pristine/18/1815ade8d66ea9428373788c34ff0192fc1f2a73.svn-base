@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>In Join</title>
+	<link rel="stylesheet" type="text/css" href="css/login/htmleaf-demo.css">
+	<link rel="stylesheet" href="css/login/style.css">
+</head>
+<body>
+	<div class="htmleaf-container">
+		<div class="cont_principal">
+			<header class="htmleaf-header">
+				<h1> <span>let's get lost && login to isay</span></h1>
+				<!-- <div class="htmleaf-links">
+					<a class="htmleaf-icon icon-htmleaf-home-outline" href="http://www.htmleaf.com/" title="jQuery之家" target="_blank"><span> jQuery之家</span></a>
+					<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="http://www.htmleaf.com/css3/ui-design/201603013167.html" title="返回下载页" target="_blank"><span> 返回下载页</span></a>
+				</div> -->
+			</header>
+		  <div class="cont_join  ">
+		    <!-- <div class="cont_letras">
+		      <p>LET 'S</p>
+		      <p>GET</p>
+		      <p>LOST</p>
+		    </div> -->
+			<form action="admin/login" method="post" id="form_user">
+		    <div class="cont_form_join">
+		    
+		      <h2><small>The Day</small></h2>
+		      <p>name:</p>    
+		      <input type="text" class="input_text" id="userName" name="userName" value=""/>
+
+		      <p>password:</p>    
+		      <input type="password" class="input_text" id="pwd" name="pwd" value=""/>
+
+		      <p>check:</p>    
+		      <input type="text" class="input_text" />
+		      
+		    </div>
+		  	</form>
+		    <div class="cont_join_form_finish">
+		      <h2>Finish <i class="material-icons">&#xE5CA;</i></h2>  
+		    </div>
+
+		    <div class="cont_btn_join">
+		      <a href="#" onclick='join_1()'>login</a>
+		    </div>
+		  </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>	
+<script src="js/login.js"></script>
+</html>

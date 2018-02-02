@@ -1,0 +1,5 @@
+jdbc.userName=sq_frivc14009
+jdbc.password=wl6732928.
+jdbc.driverClass=com.mysql.jdbc.Driver
+jdbc.jdbcUrl=jdbc:mysql://118.193.135.2:3306/sq_frivc14009?characterEncoding=utf-8
+jdbc.maxIdleTime=14400

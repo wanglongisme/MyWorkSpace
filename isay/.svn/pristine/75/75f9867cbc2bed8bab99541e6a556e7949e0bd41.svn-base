@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh" class="no-js">
+<title>data</title>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Gem style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+	<style type="text/css">
+	body{font-family: "Segoe UI","Microsoft YaHei";font-size: medium;}
+	 #cd-table .cd-table-column{
+            display: table-cell;
+            float: none
+        }
+        #cd-table .cd-table-container{
+            overflow-x: auto;
+            width: 100%;
+        }
+        #cd-table{
+            width: 100%;
+            max-width: none;
+            display: table;
+        }
+        #cd-table header.cd-table-column{
+            position: inherit;
+            float: none
+        }
+              #cd-table .cd-table-wrapper{
+            padding-left: none !important;
+        }
+        #cd-table header.cd-table-column h2, #cd-table header.cd-table-column li{width: 80px;text-align: center;}
+	</style>
+</head>
+<body>
+<section id="cd-table">
+	<header class="cd-table-column">
+		<h2>地区</h2>
+		<ul id="areaUl">
+			<!-- 地区 -->
+			<li>aa</li>
+			<li>aa</li>
+			<li>aa</li>
+			<li>aa</li>
+			<li>aa</li>
+			<li>aa</li>
+			<li>aa</li>
+			<li>aa</li>
+		</ul>
+	</header>
+	<!-- 数据 -->
+ 	<div class="cd-table-container">
+    	<div class="cd-table-wrapper">
+        	<!-- cd-table-column    -->
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+         
+         <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+            <div class="cd-table-column">
+                <h2>Plan 1</h2>
+                <ul>
+                    <li>1 GB</li>
+                    <li>2</li>
+                    <li>30 days</li>
+                    <li class="cd-unchecked"><span>No</span></li>
+                    <li>$9.99</li>
+                    <li><a class="cd-select" href="#0">Select</a></li>
+                    <li>2</li>
+                    <li>2</li>
+                </ul>
+            </div> 
+ 		</div>
+ 	</div>
+
+	<em class="cd-scroll-right"></em>
+</section> <!-- cd-table -->
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script src="js/main.js"></script> <!-- Gem jQuery -->
+<script type="text/javascript" src="../js/jquery.json-2.3.min.js" ></script>
+<script src="js/dataReport.js"></script>
+</body>
+</html>
+<script>
+$(function(){
+	var url = window.location.href; //获取url中"?"符后的字串 
+	var id = url.split("?")[1];		
+	//initDataArea(id);
+});
+
+</script>

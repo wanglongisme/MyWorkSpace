@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- scope属性配置bean的作用域
+		缺省值是singleton:单例
+		prototype:每次都创建一个bean
+		
+	 -->
+	<bean id="sayInfo" class="com.isay.model.SayInfo" scope="singleton" ></bean>
+	<bean id="createSay" class="com.isay.web.CreateSay">
+		<property name="ss" ref="sayService"></property>
+	</bean>
+	<bean id="sayService" class="com.isay.service.SayService" depends-on="sayDao">
+		<property name="sd" ref="sayDao"></property>
+	</bean>
+	<bean id="sayDao" class="com.isay.dao.SayDao"></bean>
+	<!-- 自动装配(实际用的不多)
+	byName的意思:bean的id值要与service中的定义属性值相同才能完成装配 
+	注意: 设置autowire属性时,将自动装备该类的所有属性,如只想装配个别属性时则不够灵活.
+	<bean id="sayService" class="com.isay.service.SayService" autowire="byName">
+	</bean>
+	<bean id="sd" class="com.isay.dao.SayDao"></bean>
+	-->
+	<!-- 管理bean的生命周期 -->
+	<bean class="com.isay.web.MyProcessor" ></bean>
+</beans> 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blog</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--width=device-width确保正确呈现在不同设备上
+		initial-scale=1.0 以1:1呈现,没有缩放
+		user-scalable=no 禁止缩放
+		maximum-scale=1.0 配合user-scalable=no使用, 用户只能滚动屏幕.
+	  -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0 ">
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../js/layui/css/layui.css">
+	<style type="text/css">
+	body{font-family: "Segoe UI","Microsoft YaHei";font-size: medium;}
+	#list_ul li:hover {
+    	display: block;
+    	background: #ddd;
+	}
+	#diaryDiv div{
+		border: 1px solid #ddd;
+		width: 70%;
+		margin-top:10px;
+		border-radius:2px;
+		margin-bottom: 10px;
+	}
+	</style>
+</head>
+<body>
+<div style="margin: 2% 10% 2% 10%;" id="diaryDiv">
+	<!-- diary -->
+	<table style="width: 70%" >
+        <tbody>
+	        <tr>
+	            <td width="70%"><ul class="list-group" id="list_ul">
+	            	<!-- blog -->
+	            </ul></td>
+	        </tr>
+    	</tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../js/layer/layer.js" ></script>
+<script type="text/javascript" src="../js/layui/layui.js" ></script>
+</html>
+<script>
+$(function(){
+	initData(1);
+	addTouchBottomEvent();  //触摸底部,加载数据
+});
+
+var initData = function(page){
+	$.ajax({
+		async : false,
+		type : "post",
+		url:"../getDataNameList",
+		data:{'page':page},
+		dataType : "json",
+		success : function(data){
+			//console.log(data);
+			if(data!=null && data.length>0){
+				var li = "";
+				for(i=0; i<data.length; i++){
+					var _li = "<li class='list-group-item' ><a style='color:#0099CC' href='dataReport.html?"+data[i].id+"'>"+data[i].name+"</a></li>";
+					li = li + _li;
+				}
+				$("#list_ul").append(li);
+			}else{
+				layer.msg('没有更多了');
+				$(window).unbind('scroll');
+			}
+			//addTouchBottomEvent();
+		}, error : function(){
+			
+		}
+	});
+}
+
+var diaryPage = 1;
+var addTouchBottomEvent = function(){
+	$(window).scroll(function(){
+		var clientHeight = parseInt($(window).height()); 
+		var scrollTop = $(window).scrollTop();
+		var htmlHeight = parseInt($(document).height());
+		//alert(htmlHeight+"-"+clientHeight+"-"+scrollTop+"  "+isNaN(htmlHeight));
+		var a = parseInt(htmlHeight)-parseInt(clientHeight)-parseInt(scrollTop);
+		//alert(a);
+        if(a<150){
+        	diaryPage = diaryPage + 1;
+        	initData(diaryPage);
+        }
+    });
+}
+</script>
