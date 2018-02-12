@@ -9,21 +9,18 @@
 <title>王龙的网络日志</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <meta name="description" content="王龙" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="王龙的网络日志" />
-<meta property="og:url" content="http://wanglong.info/hexo.html" />
-<meta property="og:site_name" content="王龙的网络日志" />
-<meta property="og:description" content="王龙" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="王龙的网络日志" />
 <meta name="twitter:description" content="王龙" />
-<link rel="alternative" href="http://www.wanglong.info/atom.xml" title="王龙的网络日志" type="application/atom+xml" />
 <link rel="stylesheet" href="js/layui/css/layui.css">
 <link rel="stylesheet" type="text/css" href="hexoCssAndJs/main.b6141b.css" />
-
 <style type="text/css">
 #container.show {
 	background: linear-gradient(200deg, #a0cfe4, #e8c37e);
+}
+#page-nav-1, #page-nav-2{
+   	text-align: center;
+   	margin-top: 30px;
 }
 </style>
 <script src="hexoCssAndJs/hm.js"></script>
@@ -54,16 +51,16 @@
 					</hgroup>
 					<p class="header-subtitle">like sunday.</p>
 					<nav class="header-menu">
-						<ul>
-							<li><a href="http://www.wanglong.info/">主页</a></li>
-							<li><a href="http://www.wanglong.info/categories/%E9%9A%8F%E7%AC%94/">随笔</a></li>
-							<li><a href="http://www.wanglong.info/categories/%E6%97%A5%E8%AE%B0/">日记</a></li>
-							<li><a href="http://www.wanglong.info/books">看书</a></li>
-							<li><a href="http://www.wanglong.info/movies">电影</a></li>
+						<ul id="headerUL">
+							<li><a href="#">主页</a></li>
+							<li><a href="#">随笔</a></li>
+							<li><a href="#">日记</a></li>
+							<li><a href="javascript:getReadBook()">看书</a></li>
+							<li><a href="javascript:getSeeMovie()">电影</a></li>
 						</ul>
 					</nav>
 					<nav class="header-smart-menu">
-						<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a> 
+						<a id="allBlog" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a> 
 						<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">别处</a>
 						<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
 					</nav>
@@ -86,22 +83,55 @@
 					<div class="canvas-wrap">
 						<canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
 					</div>
+					<!-- 首页文章展示 -->
 					<div id="js-content" class="content-ll">
-						<!-- 首页文章展示 -->
-
 						<!-- 分页 -->
-						<nav id="page-nav">
-							<!-- 
-							<a class="extend prev disabled" rel="prev">&laquo; Prev</a> 
-							<span class="page-number current">1</span> 
-							<a class="page-number" href="http://www.wanglong.info/page/2/">2</a> 
-							<a class="page-number" href="http://www.wanglong.info/page/3/">3</a>
-							<span class="space">…</span> 
-							<a class="page-number" href="http://www.wanglong.info/page/27/">27</a> 
-							<a class="extend next" rel="next" href="http://www.wanglong.info/page/2/">Next &raquo;</a>
-							 -->
-						</nav>
+						<nav id="page-nav"></nav>
 					</div>
+					<!-- 随笔 -->
+					<div id="js-content-1" class="content-ll" style="display:none;">
+						<!-- 分页 -->
+						<nav id="page-nav-1"></nav>
+					</div>
+					<!-- 日记 -->
+					<div id="js-content-2" class="content-ll" style="display:none;">
+						<!-- 分页 -->
+						<nav id="page-nav-2"></nav>
+					</div>
+					<!-- book -->
+					<div id="js-content-book" class="content-ll" style="display:none;">
+						<article id="undefined-books" class="article article-type-undefined " itemscope="" itemprop="blogPost">
+							<div class="article-inner">
+								<header class="article-header">
+    								<h1 class="article-title" itemprop="name">我的阅读</h1>       
+      							</header>
+      							<div class="article-entry" itemprop="articleBody">
+									<div><blockquote><p>read and feel.</p></blockquote></div>
+									<div id="book_list" >
+										<table id="book_tbody"></table>
+									</div>
+      							</div>
+							</div>
+						</article>
+					</div>
+					<!-- movie -->
+					<div id="js-content-movie" class="content-ll" style="display:none;">
+						<article  class="article article-type-undefined " itemscope="" itemprop="blogPost">
+							<div class="article-inner">
+								<header class="article-header">
+    								<h1 class="article-title" itemprop="name">我的电影</h1>       
+      							</header>
+      							<div class="article-entry" itemprop="articleBody">
+									<div><blockquote><p>like sunday,like rain.</p></blockquote></div>
+									<div id="movie_list" >
+										<table id="movie_tbody" style="border:0;"></table>
+									</div>
+      							</div>
+							</div>
+						</article>
+					</div>
+					<!-- 随笔详情 -->
+					<div id="js-content-blog" class="content-ll" style="display:none;"></div>
 				</div>
 			</div>
 			<footer id="footer">
@@ -113,115 +143,61 @@
 			</footer>
 		</div>
 		<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
-			<div class="tools-nav header-menu">
-				<ul style="width: 70%">
-					<li style="width: 33.33%" q-on="click: openSlider(e, 'innerArchive')">
-					<a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
-					<li style="width: 33.33%" q-on="click: openSlider(e, 'friends')">
-					<a href="javascript:void(0)" q-class="active:friends">别处</a></li>
-					<li style="width: 33.33%" q-on="click: openSlider(e, 'aboutme')">
-					<a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
-				</ul>
-			</div>
 			<div class="tools-wrap">
-				<section class="tools-section tools-section-all"
-					q-show="innerArchive" style="display: none;">
+				<section class="tools-section tools-section-all" q-show="innerArchive" style="display: none;">
 					<div class="search-wrap">
-						<input class="search-ipt" q-model="search" type="text"
-							placeholder="find something…" /> <i class="icon-search icon"
-							q-show="search|isEmptyStr"></i> <i class="icon-close icon"
-							q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"
-							style="display: none;"></i>
+						<input id="searchInput" class="search-ipt" q-model="search" type="text" placeholder="find something…" />
+						<i id="searchBtn" class="icon-search icon" ></i>
+						<!-- <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)" style="display: none;"></i> -->
 					</div>
 					<div class="widget tagcloud search-tag">
 						<p class="search-tag-wording">tag:</p>
-						<label class="search-switch"> <input type="checkbox"
-							q-on="click:toggleTag(e)" q-attr="checked:showTags" />
+							<label class="search-switch">
+							<input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags" />
 						</label>
 						<ul class="article-tag-list" q-show="showTags" style="display: none;">
-							<li class="article-tag-list-item"><a
-								href="javascript:void(0)" class="js-tag color5">2016</a></li>
-							<li class="article-tag-list-item"><a
-								href="javascript:void(0)" class="js-tag color5">2018</a></li>
-							<li class="article-tag-list-item"><a
-								href="javascript:void(0)" class="js-tag color3">周末</a></li>
-							<li class="article-tag-list-item"><a
-								href="javascript:void(0)" class="js-tag color4">git</a></li>
-							<div class="clearfix"></div>
+							<div id="tagLastDiv" class="clearfix"></div>
 						</ul>
 					</div>
-					<ul class="search-ul">
-						<li class="search-li" q-show="isShow"><a
-							q-attr="href:path|urlformat" class="search-title"
-							href="http://www.wanglong.info/posts/d4354a81.html"><i
-								class="icon-quo-left icon"></i><span q-text="title">2018-01-28</span></a>
-							<p class="search-time">
-								<i class="icon-calendar icon"></i> <span
-									q-text="date|dateformat">2018-01-28</span>
-							</p>
-							<p class="search-tag">
-								<i class="icon-price-tags icon"></i> <span
-									q-on="click:choseTag(e, name)" q-text="name|tagformat">#周末</span>
-								<!--q-repeat-->
-							</p></li>
-						<li class="search-li" q-show="isShow"><a
-							q-attr="href:path|urlformat" class="search-title"
-							href="http://www.wanglong.info/posts/edd7588a.html"><i
-								class="icon-quo-left icon"></i><span q-text="title">北方的空地</span></a>
-							<p class="search-time">
-								<i class="icon-calendar icon"></i> <span
-									q-text="date|dateformat">2018-01-25</span>
-							</p>
-							<p class="search-tag">
-								<i class="icon-price-tags icon"></i> <span
-									q-on="click:choseTag(e, name)" q-text="name|tagformat">#读书</span>
-								<!--q-repeat-->
-							</p></li>
-						<li class="search-li" q-show="isShow"><a
-							q-attr="href:path|urlformat" class="search-title"
-							href="http://www.wanglong.info/posts/2f36df26.html"><i
-								class="icon-quo-left icon"></i><span q-text="title">jquery的ajax上传文件</span></a>
-							<p class="search-time">
-								<i class="icon-calendar icon"></i> <span
-									q-text="date|dateformat">2016-12-26</span>
-							</p>
-							<p class="search-tag">
-								<i class="icon-price-tags icon"></i> <span
-									q-on="click:choseTag(e, name)" q-text="name|tagformat">#2016</span>
-								<!--q-repeat-->
-							</p></li>
-						<!--q-repeat-->
-					</ul>
+					<ul id="searchBlogList" class="search-ul"></ul>
 				</section>
-				<section class="tools-section tools-section-friends"
-					q-show="friends" style="display: none;">
+				<section class="tools-section tools-section-friends" q-show="friends" style="display: none;">
 					<ul class="search-ul">
 						<li class="search-li">
-							<a href="http://site.wanglong.info/" target="_blank" class="search-title">
-							<i class="icon-quo-left icon"></i>网站的第一个版本
+							<a href="data_model/dataReport.html?1" target="_blank" class="search-title">
+								<i class="icon-quo-left icon"></i>51job职位数据
+							</a>
+						</li>
+						<li class="search-li">
+							<a href="data_model/dataReport.html?2" target="_blank" class="search-title">
+								<i class="icon-quo-left icon"></i>智联职位数据
 							</a>
 						</li>
 						<li class="search-li">
 							<a href="http://www.wanglong.info/#" target="_blank" class="search-title">
-							<i class="icon-quo-left icon"></i>暂无友情链接
+								<i class="icon-quo-left icon"></i>暂无友情链接
+							</a>
+						</li>
+						<li class="search-li">
+							<a href="so.html" target="_blank" class="search-title">
+								<i class="icon-quo-left icon"></i>搜索
 							</a>
 						</li>
 					</ul>
 				</section>
 				<section class="tools-section tools-section-me" q-show="aboutme" style="display: none;">
 					<div class="aboutme-wrap" id="js-aboutme">
-						这个网站 <br />就是记录下自己平时的生活状态, <br />一些突然的想法, <br />多年以后,也知道自己的时间做了什么.
-						<br />联系方式 <br />Email: wanglongisme@qq.com
+						这个网站 <br/>就是记录下自己平时生活的状态, <br/>一些突然的想法, <br/>多年以后,也知道自己的时间都做了什么.
+						<br/>联系方式 <br/>Email: wanglongisme@qq.com
 					</div>
 				</section>
 			</div>
 		</div>
-
 	</div>
 	<script src="hexoCssAndJs/slider.971ea1.js"></script>
 	<script src="js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/layui/layui.js" ></script>
 	<script src="hexoCssAndJs/hexo.js"></script>
-	<script type="text/javascript" src="js/diary.js" ></script>
+	<script type="text/javascript" src="js/common.js" ></script>
 </body>
 </html>

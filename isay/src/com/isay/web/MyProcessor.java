@@ -8,7 +8,7 @@ public class MyProcessor implements BeanPostProcessor{
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 		// TODO Auto-generated method stub
-		System.out.println("this Myprocessor is behind bean init method--"+bean+"--"+beanName);
+		//System.out.println("this Myprocessor is behind bean init method--"+bean+"--"+beanName);
 		return bean;
 	}
 

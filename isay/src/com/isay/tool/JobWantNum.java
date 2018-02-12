@@ -26,7 +26,7 @@ public class JobWantNum {
 	 * 采集51job职位的定时任务
 	 * 2017-3-7 09:29:31
 	 */
-	@Scheduled(cron="16 51 9 ? * MON")
+	//@Scheduled(cron="16 51 9 ? * MON")
 	//@Scheduled(cron="16 32 12 ? * TUE,FRI")
 	public void job1(){
 		System.out.println(new Date()+"开始每日任务job1....");
@@ -82,7 +82,7 @@ public class JobWantNum {
 	 * 采集智联招聘职位的定时任务
 	 * 2017-3-7 09:29:31
 	 */
-	@Scheduled(cron="8 22 18 ? * MON")
+	//@Scheduled(cron="8 22 18 ? * MON")
 	//@Scheduled(cron="8 16 11 ? * TUE,FRI")
 	public void job2(){
 		System.out.println(new Date()+"开始每日任务job2....");

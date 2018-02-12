@@ -1,6 +1,8 @@
 package com.isay.web;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +27,7 @@ public class Upload {
             System.out.println("上传的文件原名称:"+fileName);
             // 判断文件类型
             type=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
-            if (type!=null) {// 判断文件类型是否为空
+            if (type!=null) { // 判断文件类型是否为空
                 if ("GIF".equals(type.toUpperCase())||"PNG".equals(type.toUpperCase())||"JPG".equals(type.toUpperCase())||"JPEG".equals(type.toUpperCase())) {
                     // 项目在容器中实际发布运行的根路径
                     String realPath=request.getSession().getServletContext().getRealPath("/");
@@ -36,28 +38,31 @@ public class Upload {
                     	tomcatWebappsUrl = realPath;
                     }
                     // 自定义的文件名称
-                    String trueFileName=String.valueOf(System.currentTimeMillis())+fileName;
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                    String trueFileName = formatter.format(new Date())+"."+type;
                     returnUrl = trueFileName;
                     // 设置存放图片文件的路径
-                    path = tomcatWebappsUrl+"upload"+File.separator+"image"+File.separator+trueFileName;
+        	     	//TODO
+                    path = tomcatWebappsUrl+"/upload"+File.separator+"image"+File.separator+trueFileName;
                     // 转存文件到指定的路径
+                    
+                    System.out.println(path);
                     try {
 						file.transferTo(new File(path));
 					} catch (Exception e) {
-						// TODO
 						e.printStackTrace();
 					}
                     returnUrl = "upload"+File.separator+"image"+File.separator+trueFileName;
-                }else {
-                    returnUrl = "不是我们想要的文件类型,请按要求重新上传";
+                    System.out.println(returnUrl);
+                    return returnUrl;
                 }
-            }else {
-                returnUrl = "文件类型为空";
+                returnUrl = "文件类型错误,请按要求重新上传";
+                return returnUrl;
             }
-        }else {
-            returnUrl = "没有找到相对应的文件";
         }
-		System.out.println("返回图片路径: upload"+File.separator+"image"+File.separator+returnUrl);
+        returnUrl = "没有找到相对应的文件";
+        
+		System.out.println("返回图片路径: "+returnUrl);
 		return returnUrl;
 	}
 	

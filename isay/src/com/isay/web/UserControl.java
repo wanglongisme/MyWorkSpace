@@ -1,5 +1,7 @@
 package com.isay.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,8 @@ public class UserControl {
 	
 	@Autowired
 	private UserService us;
+	@Autowired
+	HttpServletRequest request;
 	
 	@RequestMapping(value="/admin/login", method = RequestMethod.POST)
 	public ModelAndView login(User user){
@@ -23,6 +27,7 @@ public class UserControl {
 		if(u==null){
 			modelAndView.setViewName("login_again");	
 		}else{
+			request.getSession().setAttribute("userKey", u.getId());
 			modelAndView.setViewName("admin");	
 		}
 		return modelAndView;

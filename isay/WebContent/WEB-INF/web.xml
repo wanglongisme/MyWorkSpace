@@ -2,12 +2,12 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>isay</display-name>
   <welcome-file-list>
-    <welcome-file>list.html</welcome-file>
+    <welcome-file>hexo.html</welcome-file>
   </welcome-file-list>
   
   <context-param>
   	<param-name>contextConfigLocation</param-name>
-  	<param-value>classpath:applicationContext.xml</param-value>
+  	<param-value>classpath:applicationContext*.xml</param-value>
   </context-param>
   
 	<listener>
@@ -17,7 +17,7 @@
 	<servlet>
 		<servlet-name>say</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
+        <load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>

@@ -4,13 +4,15 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>admin</title>
+	<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+	<title>tobe</title>
 	<!-- <link rel="stylesheet" href="../css/admin/css/font-awesome.min.css"> -->
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../css/admin/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="../css/admin/css/default.css">
 	<link rel="stylesheet" href="../css/admin/css/style.css">
 	<link rel="stylesheet" href="../js/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../css/admin_doubanImgs.css">
 	<!--[if IE]>
 		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
 	<![endif]-->
@@ -39,17 +41,16 @@
 			<span>Home</span><i class="glyphicon glyphicon-home" style="top:auto;"></i>
 
 			<input type="radio" class="tab-2" name="tab">
-			<span >List</span><i class="glyphicon glyphicon-list-alt" style="top:auto;"></i>
+			<span >Diary</span><i class="glyphicon glyphicon-list-alt" style="top:auto;"></i>
 			
-			<!--  -->
 			<input type="radio" class="tab-3" name="tab">
-			<span>Users</span><i class="fa fa-user"></i>
+			<span>Read</span><i class="glyphicon glyphicon-book" style="top:auto;"></i>
 
 			<input type="radio" class="tab-4" name="tab">
-			<span>Comments</span><i class="fa fa-comment"></i>
+			<span>Movie</span><i class="glyphicon glyphicon-facetime-video" style="top:auto;"></i>
 			
 			<input type="radio" class="tab-5" name="tab">
-			<span>Upload</span><i class="fa fa-cloud-upload"></i>
+			<span>Blog</span><i class="glyphicon glyphicon-list-alt" style="top:auto;"></i>
 			
 			<input type="radio" class="tab-6" name="tab">
 			<span>Favorite</span><i class="fa fa-star"></i>
@@ -69,46 +70,38 @@
 			<!-- tab-top-bar button -->
 			<div class="top-bar" >
 				<ul id="ul_shower">
-					<li id="li_out" style="display:none;">
-						<a href="" title="Out">
-							<i class="glyphicon glyphicon-share"></i>
-						</a>
-					</li>
-					<li id="li_messages" style="display:none;">
-						<a href="" title="Messages">
-							<i class="glyphicon glyphicon-envelope"></i>
-						</a>
-					</li>
-					<li id="li_delete" style="display:none;">
-						<a href="javascript:void(0)" title="删除日志" onclick="delDiary()">
+					<li id="li_delete" style="display:none;" >
+						<a href="javascript:void(0)" title="删除日志" >
 							<i class="glyphicon glyphicon-trash"></i>
 						</a>
 					</li>
 					<li id="li_see" style="display:none;">
-						<a href="javascript:void(0)" title="查看日志" onclick="seeDiary()">
+						<a href="javascript:void(0)" title="查看日志" onclick="">
 							<i class="glyphicon glyphicon-eye-open"></i>
 						</a>
 					</li>
+					<!-- 
 					<li id="li_edit2" style="display:none;">
 						<a href="javascript:void(0)" title="文本模式" onclick="edit2()">
 							<i class="glyphicon glyphicon-pencil"></i>
 						</a>
 					</li>
+					 -->
 					<li id="li_edit" style="display:none;">
-						<a href="javascript:void(0)" title="编辑器" onclick="edit()">
+						<a href="javascript:void(0)" title="编辑器" onclick="">
 							<i class="glyphicon glyphicon-leaf"></i>
 						</a>
 					</li>
-					<li id="li_write" style="display:none;">
-						<a href="javascript:void(0)" title="Write" onclick="createDiary()">
-							<i class="glyphicon glyphicon-edit"></i>
+					<li id="li_add" style="display:none;" onclick="">
+						<a href="javascript:void(0)" title="addMovie" onclick="">
+							<i class="glyphicon glyphicon-plus"></i>
 						</a>
 					</li>
 				</ul>
 			</div>
 
 			<!-- tab-content -->
-			<div class="tab-content">
+			<div class="tab-content" style="overflow-x:auto;overflow-y:scroll;">
 				<section class="tab-item-1">
 					<h1>One</h1>
 				</section>
@@ -118,14 +111,51 @@
 					</div>
 					<div id="page_div" style="position:absolute; bottom:235px;left:220px;"></div>
 				</section>
-				<section class="tab-item-3">
-					<h1>Three</h1>
+				<section class="tab-item-3" >
+					<div id="book_list" >
+						<table class="layui-table" lay-skin="line">
+						 <colgroup>
+						    <col width="60"><col width="150"><col width="80"><col width="60"><col width="80"><col width="180">
+						  </colgroup>
+						  <thead>
+						    <tr>
+						      <th>图片</th>
+						      <th>名称</th>
+						      <th>时间</th>
+						      <th>状态</th>
+						      <th>星星</th>
+						      <th>总结</th>
+						    </tr> 
+						  </thead>
+						  <tbody id="book_tbody"></tbody>
+						</table>
+					</div>
 				</section>
 				<section class="tab-item-4">
-					<h1>Four</h1>
+					<div id="movie_list" >
+						<table class="layui-table" lay-skin="line">
+						 <colgroup>
+						    <col width="60"><col width="130"><col width="80"><col width="60"><col width="60"><col width="180">
+						  </colgroup>
+						  <thead>
+						    <tr>
+						      <th>图片</th>
+						      <th>名称</th>
+						      <th>时间</th>
+						      <th>状态</th>
+						      <th>星星</th>
+						      <th>一句话</th>
+						    </tr> 
+						  </thead>
+						  <tbody id="movie_tbody"></tbody>
+						</table>
+					</div>
 				</section>
 				<section class="tab-item-5">
-					<h1>Five</h1>
+					<div id="blog_list">
+						<!-- <a href="#" class="list-group-item active"> -->
+					</div>
+					<div id="blog_page_div" style="position:absolute; bottom:235px;left:220px;"></div>
 				</section>
 				<section class="tab-item-6">
 					<h1>Six</h1>
@@ -151,5 +181,9 @@
 <script type="text/javascript" src="../js/layer/layer.js" ></script>
 <script type="text/javascript" src="../js/layui/layui.js" ></script>
 <script type="text/javascript" src="../js/admin.js" ></script>
+<script type="text/javascript" src="../js/common.js" ></script>
+<script type="text/javascript" src="../js/book.js" ></script>
+<script type="text/javascript" src="../js/movie.js" ></script>
 <script type="text/javascript" src="../js/diary.js" ></script>
+<script type="text/javascript" src="../js/blog.js" ></script>
 </html>

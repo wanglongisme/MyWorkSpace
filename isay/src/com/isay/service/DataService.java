@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isay.dao.DataDao;
-import com.isay.dao.DiaryDao;
 
 @Service("dataService")
 public class DataService{

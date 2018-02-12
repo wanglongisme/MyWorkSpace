@@ -34,13 +34,13 @@ public class SendHttpUtil {
             // 设置通用的请求属性
             httpUrlCon.setRequestProperty("accept", "*/*");
             httpUrlCon.setRequestProperty("connection", "Keep-Alive");
-            httpUrlCon.setRequestProperty("user-agent",
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            //httpUrlCon.setRequestProperty("user-agent","Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            httpUrlCon.setRequestProperty("user-agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4549.400 QQBrowser/9.7.12900.400");
+            
             //httpUrlCon.setRequestProperty("Charset", charset);
             httpUrlCon.connect();  //建立tcp链接
             
-            in = new BufferedReader(
-                    new InputStreamReader(httpUrlCon.getInputStream(),charset));  //httpUrlCon.getInputStream()发送http请求
+            in = new BufferedReader(new InputStreamReader(httpUrlCon.getInputStream(),charset));  //httpUrlCon.getInputStream()发送http请求
             String line;
             
             StringBuffer lineStr  = new StringBuffer();

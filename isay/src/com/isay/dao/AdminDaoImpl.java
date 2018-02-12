@@ -19,7 +19,7 @@ public class AdminDaoImpl {
 	Logger log = Logger.getRootLogger();
 	
 	public User login(User user){
-		System.out.println(user);
+		//System.out.println(user);
 		String sql = "select id,username,pwd from r_user where username=? and pwd=?";
 		User u = null;
 		try{

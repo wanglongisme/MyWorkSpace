@@ -33,14 +33,27 @@ font-family: 'lucida grande', 'lucida sans unicode', lucida, helvetica, 'Hiragin
 <script>
 $(function(){
 	var url = window.location.href; //获取url中"?"符后的字串 
-	var id = url.split("?")[1];			
+	var param = url.split("?")[1];
+	var id = param.split("&")[1];
+	var ajaxUrl = "getDiaryById";
+	var ajaxData = {'diaryId': id};
+	if(param.split("&")[0] == "1"){
+		//blog
+		ajaxUrl = "getBlogById";
+		ajaxData = {'blogId': id};
+	}
 	$.ajax({
 		async : true,
 		type : "post",
-		url:"getDiary/"+id,
-		data:{},
+		url: ajaxUrl,
+		data: ajaxData,
 		dataType : "json",
 		success : function(data){
+			if(data==null || data.length<1){
+				console.log("data is null");
+				return;
+			}
+			data = data[0];
 			$("#title").text(data.title);
 			$("#title").after(data.info);
 			$("#time").append(data.createTime);
